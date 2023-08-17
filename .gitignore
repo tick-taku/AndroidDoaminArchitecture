@@ -22,7 +22,7 @@ local.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
@@ -125,4 +125,4 @@ google-services.json
 # Android Profiling
 *.hprof
 
-
+!gradle/wrapper/gradle-wrapper.jar
