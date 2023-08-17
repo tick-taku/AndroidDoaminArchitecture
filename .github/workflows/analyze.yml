@@ -19,12 +19,18 @@ jobs:
         language: [ 'java' ]
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
-    - name: Autobuild CodeQL
-      uses: github/codeql-action/autobuild@v2
+    - name: Build project
+      run: |
+        ./gradlew clean
+        ./gradlew assembleRelease
     - name: Perform Analysis
       uses: github/codeql-action/analyze@v2
       with:
