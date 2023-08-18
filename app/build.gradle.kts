@@ -34,5 +34,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.0")
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat)
 }
