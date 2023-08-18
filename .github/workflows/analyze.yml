@@ -29,8 +29,7 @@ jobs:
         languages: ${{ matrix.language }}
     - name: Build project
       run: |
-        ./gradlew clean
-        ./gradlew assembleRelease
+        ./gradlew clean assemble -S
     - name: Perform Analysis
       uses: github/codeql-action/analyze@v2
       with:
