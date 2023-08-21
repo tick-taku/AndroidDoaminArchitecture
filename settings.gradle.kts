@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AndroidDomainArchitecture"
 include(":app")
-include(":datasource:api")
+include(":core:entity")
