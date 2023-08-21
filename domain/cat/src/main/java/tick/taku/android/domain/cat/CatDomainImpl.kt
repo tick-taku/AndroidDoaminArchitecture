@@ -21,7 +21,7 @@ class CatDomainImpl @Inject internal constructor(
         if (catsFlow.value.isEmpty()) fetch()
     }
 
-    override suspend fun fetch() {
-        catsFlow.value = catRepository.fetchCats(IMAGE_LIMIT).getOrElse { emptyList() }
+    override suspend fun fetch(): Result<Unit> {
+        return catRepository.fetchCats(IMAGE_LIMIT).onSuccess { catsFlow.value = it }.map {}
     }
 }

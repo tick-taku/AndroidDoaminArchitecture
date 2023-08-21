@@ -5,5 +5,5 @@ import tick.taku.android.core.entity.Cat
 
 interface CatDomain {
     fun cats(): Flow<List<Cat>>
-    suspend fun fetch()
+    suspend fun fetch(): Result<Unit>
 }

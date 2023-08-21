@@ -36,6 +36,7 @@ class CatsViewModel @Inject internal constructor(
     fun fetchCats() {
         viewModelScope.launch {
             domain.fetch()
+                .onFailure { _uiEvent.send(UiEvent.Error(it)) }
         }
     }
 
