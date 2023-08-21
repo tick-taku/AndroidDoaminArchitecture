@@ -14,12 +14,14 @@ class CatRepositoryImpl @Inject internal constructor(
     private val catService: CatService
 ): CatRepository {
 
-    override suspend fun fetchCats(limit: Int): Result<Cat> = apiCall {
+    override suspend fun fetchCats(limit: Int): Result<List<Cat>> = apiCall {
         catService.fetchCatImages(limit).result { it.toEntity() }
     }
 
-    private fun CatImageResponse.toEntity() = Cat(
-        id = id,
-        url = Url(url)
-    )
+    private fun List<CatImageResponse>.toEntity() = map {
+        Cat(
+            id = it.id,
+            url = Url(it.url)
+        )
+    }
 }

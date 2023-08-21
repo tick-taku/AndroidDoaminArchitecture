@@ -10,5 +10,5 @@ interface CatService {
 
     @Headers("x-api-key: apiKey")
     @GET("/v1/images/search")
-    suspend fun fetchCatImages(@Query("limit") limit: Int): Response<CatImageResponse>
+    suspend fun fetchCatImages(@Query("limit") limit: Int): Response<List<CatImageResponse>>
 }
