@@ -37,9 +37,9 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().also {
-            it.callTimeout(2000, TimeUnit.MILLISECONDS)
-            it.readTimeout(2000, TimeUnit.MILLISECONDS)
+        return OkHttpClient.Builder().apply {
+            callTimeout(2000, TimeUnit.MILLISECONDS)
+            readTimeout(2000, TimeUnit.MILLISECONDS)
         }.build()
     }
 
@@ -50,10 +50,10 @@ class ApiModule {
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
     ): Retrofit {
-        return Retrofit.Builder().also {
-            it.baseUrl(baseUrl)
-            it.client(okHttpClient)
-            it.addConverterFactory(converterFactory)
+        return Retrofit.Builder().apply {
+            baseUrl(baseUrl)
+            client(okHttpClient)
+            addConverterFactory(converterFactory)
         }.build()
     }
 }
