@@ -30,9 +30,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":datasource:api"))
+    implementation(project(":core:entity"))
+
     implementation(libs.androidx.core)
     implementation(libs.coroutines.core)
-
     implementation(libs.retrofit)
 
     implementation(libs.dagger.hilt)
