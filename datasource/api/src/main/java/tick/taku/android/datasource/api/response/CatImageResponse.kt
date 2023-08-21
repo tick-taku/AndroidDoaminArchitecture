@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CatImageResponse(
-    val id: Int,
+    val id: String,
     val url: String
 )
