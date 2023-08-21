@@ -1,6 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.gradle)
+    alias(libs.plugins.kotlin.gradle)
+    alias(libs.plugins.ksp.gradle)
+    alias(libs.plugins.dagger.hilt.gradle)
 }
 
 android {
@@ -34,5 +36,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.0")
+    implementation(libs.androidx.core)
+    implementation(libs.coroutines.core)
+    implementation(libs.kotlinx.serialization)
+
+    implementation(libs.dagger.hilt)
+    ksp(libs.dagger.hilt.compiler)
 }
