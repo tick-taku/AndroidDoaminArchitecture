@@ -17,7 +17,7 @@ class CatDomainImpl @Inject internal constructor(
 
     private val catsFlow = MutableStateFlow<List<Cat>>(emptyList())
 
-    override suspend fun cats(): Flow<List<Cat>> = catsFlow.onStart {
+    override fun cats(): Flow<List<Cat>> = catsFlow.onStart {
         if (catsFlow.value.isEmpty()) fetch()
     }
 
