@@ -1,6 +1,6 @@
 [versions]
 application = "1"
-target-sdk = "33"
+target-sdk = "34"
 min-sdk = "24"
 
 agp = "8.1.0"

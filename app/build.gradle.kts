@@ -20,6 +20,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -36,9 +44,16 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:entity"))
+    implementation(project(":feature:cat"))
+    implementation(project(":domain:cat"))
+    implementation(project(":datasource:api"))
+    implementation(project(":datasource:repository"))
+
     implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.bundles.compose)
     implementation(libs.coroutines.core)
-    implementation(libs.kotlinx.serialization)
 
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)
