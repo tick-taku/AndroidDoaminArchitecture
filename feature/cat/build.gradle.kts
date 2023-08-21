@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.bundles.compose)
+    implementation(libs.compose.coil)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.coroutines.core)
 

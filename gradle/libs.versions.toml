@@ -26,6 +26,7 @@ compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 compose-activity = { module = "androidx.activity:activity-compose", version = "1.7.2" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.6.1" }
+compose-coil = { module = "io.coil-kt:coil-compose", version = "2.4.0" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
