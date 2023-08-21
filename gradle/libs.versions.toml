@@ -31,6 +31,7 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 
 dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+dagger-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version = "2.9.0" }
 retrofit-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
@@ -55,5 +56,6 @@ compose = [
     "compose-material",
     "compose-activity",
     "compose-viewmodel",
-    "compose-ui-preview"
+    "compose-ui-preview",
+    "dagger-hilt-navigation-compose"
 ]
