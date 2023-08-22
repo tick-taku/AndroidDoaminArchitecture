@@ -4,5 +4,5 @@ import tick.taku.android.core.entity.Breed
 import tick.taku.android.core.entity.Cat
 
 interface FilterByBreedUseCase {
-    suspend fun invoke(cats: List<Cat>, breed: Breed): List<Cat>
+    suspend operator fun invoke(cats: List<Cat>, breed: Breed): List<Cat>
 }

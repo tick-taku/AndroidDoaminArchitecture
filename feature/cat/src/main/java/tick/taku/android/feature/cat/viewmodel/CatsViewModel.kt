@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import tick.taku.android.core.entity.Breed
 import tick.taku.android.core.entity.Cat
 import tick.taku.android.domain.cat.CatDomain
 import javax.inject.Inject
@@ -35,8 +36,13 @@ class CatsViewModel @Inject internal constructor(
 
     fun fetchCats() {
         viewModelScope.launch {
-            domain.fetch()
-                .onFailure { _uiEvent.send(UiEvent.Error(it)) }
+            domain.fetch().onFailure { _uiEvent.send(UiEvent.Error(it)) }
+        }
+    }
+
+    fun filter(breed: Breed) {
+        viewModelScope.launch {
+            domain.filterByBreed(breed).onFailure { _uiEvent.send(UiEvent.Error(it)) }
         }
     }
 
