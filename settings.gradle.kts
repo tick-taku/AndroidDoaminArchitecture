@@ -17,5 +17,5 @@ rootProject.name = "AndroidDomainArchitecture"
 include(":app")
 include(":core:entity")
 include(":datasource:api", ":datasource:repository")
-include(":domain:cat")
+include(":domain:cat", ":domain:usecase")
 include(":feature:cat")

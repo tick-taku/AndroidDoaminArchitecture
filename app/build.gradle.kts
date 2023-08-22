@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":core:entity"))
     implementation(project(":feature:cat"))
     implementation(project(":domain:cat"))
+    implementation(project(":domain:usecase"))
     implementation(project(":datasource:api"))
     implementation(project(":datasource:repository"))
 

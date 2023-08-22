@@ -30,8 +30,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain:usecase"))
-    implementation(project(":datasource:repository"))
     implementation(project(":core:entity"))
 
     implementation(libs.androidx.core)
