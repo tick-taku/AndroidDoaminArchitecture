@@ -11,6 +11,10 @@ android {
     compileSdk = libs.versions.target.sdk.get().toInt()
 
     defaultConfig {
+        def versionMajor = 1
+        def versionMinor = 0
+        def versionPatch = 0
+
         applicationId = "tick.taku.android"
         minSdk = libs.versions.min.sdk.get().toInt()
         targetSdk = libs.versions.target.sdk.get().toInt()
