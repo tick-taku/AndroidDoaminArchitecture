@@ -1,4 +1,9 @@
 [versions]
+versionMajor = 1
+versionMinor = 20
+versionPatch = 0
+versionOffset = 0
+
 application = "1"
 target-sdk = "34"
 min-sdk = "24"
