@@ -1,0 +1,38 @@
+name: RELEASE
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Target release version"
+        required: true
+        type: string
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      NEW_VERSION: ${{ inputs.version }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Switch release branch
+        run: |
+          git switch -c "release/$NEW_VERSION"
+      - name: Increment version
+        run: |
+          ./bin/bump_version.sh "$NEW_VERSION"
+          git config user.name "actions-user"
+          git config user.email "action@github.com"
+          git add .
+          git commit -m "Bump version to $NEW_VERSION"
+          git push origin $(git branch --show-current)
+      - name: Make Pull Request
+        run: |
+          gh pr create \
+            -B main \
+            -t "Release $NEW_VERSION" \
+            -F ".github/PULL_REQUEST/release.md"
+      - name: Post comment
+        run: |
+          pr_number = $(gh pr list --state open | grep "Release" | awk '{print $1}')
+          gh pr comment $pr_number -b "Hello World"
