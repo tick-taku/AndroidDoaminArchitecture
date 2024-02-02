@@ -1,4 +1,4 @@
-# Release
+# Release x.x.0
 
 ## Release note
 
