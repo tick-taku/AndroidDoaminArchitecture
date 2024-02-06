@@ -6,5 +6,6 @@ pr_body=$(cat .github/PULL_REQUEST/release.md | sed -e "s/# Release x\.x\.0/# Re
 
 gh pr create \
   -B main \
-  -t "Release $NEW_VERSION" \
+  -t "Release $new_version" \
+  -m "Release $new_version" \
   -b "$pr_body"
