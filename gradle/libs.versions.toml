@@ -1,7 +1,7 @@
 [versions]
 versionMajor = "3"
-versionMinor = "60"
-versionPatch = "0"
+versionMinor = "4"
+versionPatch = "5"
 versionOffset = 0
 
 application = "1"
