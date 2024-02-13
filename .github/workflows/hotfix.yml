@@ -1,0 +1,36 @@
+name: HOTFIX
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Target release version"
+        required: true
+        type: string
+      branch_name:
+        description: "Branch name ex: hotfix/xxxx"
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Create milestone
+        run: |
+          gh api repos/tick-taku/AndroidDoaminArchitecture/milestones -X POST -F state=open -F title="Release ${{ inputs.version }}"
+      - name: Make PullRequest
+        uses: ./.github/actions/make_release_pull_request
+        with:
+          version: ${{ inputs.version }}
+          github_token: $GITHUB_TOKEN
+      - name: Make hotfix branch
+        run: |          
+          git switch -C "hotfix/${{ inputs.branch_name }}"
+          git push origin "hotfix/${{ inputs.branch_name }}"
+          gh pr create -t "hotfix" -T ".github/PULL_REQUEST/release.md" -B "release/${{ inputs.version }}"
