@@ -1,0 +1,42 @@
+name: MAKE_RELEASE_PULL_REQUEST
+
+inputs:
+  version:
+    description: "Target release version"
+    required: true
+    type: string
+  github_token:
+    description: "GitHub token for github cli"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set to env
+      run: |
+        echo "NEW_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+        echo "GITHUB_TOKEN=${{ inputs.github_token }}" >> $GITHUB_ENV
+      shell: bash
+    - name: Switch release branch
+      run: |
+        git switch -c "release/$NEW_VERSION"
+      shell: bash
+    - name: Increment version
+      run: |
+        ./.github/script/bump_version.sh "$NEW_VERSION"
+        git config user.name "actions-user"
+        git config user.email "action@github.com"
+        git add .
+        git commit -m "Bump version to $NEW_VERSION"
+        git push origin $(git branch --show-current)
+      shell: bash
+    - name: Make Pull Request
+      run: |
+        ./.github/script/make_pr.sh "$NEW_VERSION"
+        echo "pr_number=$(gh pr list --state open | grep \"Release $NEW_VERSION\" | awk '{print $1}')" >> $GITHUB_ENV
+      shell: bash
+    - name: Post comment
+      run: |
+        gh pr comment ${{ env.pr_number }} -b "release please"
+        gh pr comment ${{ env.pr_number }} -b "app please"
+      shell: bash
