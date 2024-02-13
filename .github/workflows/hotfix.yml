@@ -30,7 +30,7 @@ jobs:
           version: ${{ inputs.version }}
           github_token: $GITHUB_TOKEN
       - name: Make hotfix branch
-        if: github.event.inputs.branch_name != ''
-        run: |          
+        if: inputs.branch_name
+        run: |
           git switch -C "hotfix/${{ inputs.branch_name }}"
           git push origin "hotfix/${{ inputs.branch_name }}"

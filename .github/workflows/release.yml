@@ -13,7 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Make PullRequest
+        id: make-pr
         uses: ./.github/actions/make_release_pull_request
         with:
           version: ${{ inputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post comment
+        run: |
+          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "release please"
+          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "app please"
