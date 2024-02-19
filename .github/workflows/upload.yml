@@ -1,0 +1,27 @@
+name: Upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        type: string
+      app_slug:
+        type: string
+      workflow_id:
+        type: string
+      build_tri_token:
+        type: string
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pr_number: ${{ inputs.pr_number }}
+          app_slug: ${{ inputs.app_slug }}
+          build_trigger_token: ${{ inputs.build_tri_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow_id: ${{ inputs.workflow_id }}
