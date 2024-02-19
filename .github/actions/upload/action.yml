@@ -1,0 +1,47 @@
+name: BITRISE_UPLOAD
+
+inputs:
+  pr_number:
+    description: "Target pr's number"
+    required: true
+    type: string
+  app_slug:
+    description: "App slug for bitrise build url"
+    required: true
+  build_trigger_token:
+    description: "Build trigger token for bitrise ci"
+    required: true
+  github_token:
+    description: "GitHub token for github cli"
+    required: true
+  workflow_id:
+    description: "Workflow id on bitrise"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set github token
+      run: |
+        echo "GITHUB_TOKEN=${{ inputs.github_token }}" >> $GITHUB_ENV
+      shell: bash
+    - name: Set metadata to outputs
+      id: metadata
+      run: |
+        metadata=$(gh pr view ${{ inputs.pr_number }} --json "baseRefName,headRefName,headRefOid")
+        echo "base_branch=$(echo $metadata | jq .baseRefName)" >> $GITHUB_OUTPUT
+        echo "upstream_branch=$(echo $metadata | jq .headRefName)" >> $GITHUB_OUTPUT
+        echo "commit_hash=$(echo $metadata | jq .headRefOid)" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Make bitrise build
+      run: |
+        echo "trigger_token ${{ inputs.build_trigger_token }}"
+        echo "upstream_branch : ${{ steps.metadata.outputs.upstream_branch }}"
+        echo "workflow_id: ${{ inputs.workflow_id }}"
+        echo "base_branch: ${{ steps.metadata.outputs.base_branch }}"
+        echo "pr_number: ${{ inputs.pr_number }}"
+        echo "repository: ${{ github.repository }}"
+        echo "commit_hash: ${{ steps.metadata.outputs.commit_hash }}"
+        echo "issue_number: ${{ github.event.issue.number }}"
+        echo "${{ github.event }}"
+      shell: bash
