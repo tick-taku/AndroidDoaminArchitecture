@@ -1,0 +1,16 @@
+name: ASSIGN_MILESTONE_ON_MERGE
+
+on:
+  pull_request:
+    types: [push]
+
+jobs:
+  assign-milestone:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assign milestone
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} -m "Next Release"
