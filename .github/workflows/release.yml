@@ -10,15 +10,18 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: Change
+        run: |
+          milestone_number=$(gh api repos/${{ github.repository }}/milestones -q ".[] | select(.title == \"Next Release\") | .number")
+          gh api -X PATCH repos/${{ github.repository }}/milestones/$milestone_number -f title="Release $NEW_VERSION"
+          gh api -X POST repos/${{ github.repository }}/milestones -f title="Next Release"
       - name: Make PullRequest
         id: make-pr
         uses: ./.github/actions/make_release_pull_request
         with:
           version: ${{ inputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Post comment
-        run: |
-          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "release please"
-          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "app please"
