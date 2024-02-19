@@ -35,9 +35,16 @@ runs:
         git commit -m "Bump version to $NEW_VERSION"
         git push origin $(git branch --show-current)
       shell: bash
-    - name: Make Pull Request
-      id: make-pr
+    - name: Change milestone title
+      id: milestone
       run: |
-        ./.github/script/make_pr.sh "$NEW_VERSION"
-        echo "pr_number=$(gh pr list --state open | grep \"Release $NEW_VERSION\" | awk '{print $1}')" >> $GITHUB_OUTPUT
+        milestone_number=$(gh api repos/${{ github.repository }}/milestones -q ".[] | select(.title == \"Next Release\") | .number")
+        gh api -X PATCH repos/${{ github.repository }}/milestones/$milestone_number -F title="Release $NEW_VERSION"
+        gh api -X POST repos/${{ github.repository }}/milestones -F title="Next Release"
+      shell: bash
+    - name: Make Pull Request
+      id: make_pr
+      run: |
+        ./.github/script/make_release_pr.sh "$NEW_VERSION"
+        echo "pr_number=$(gh pr list -s open --json number,title,milestone --jq '.[] | select(.milestone.number == ${{ steps.milestone.outputs.number }}) | .number')" >> $GITHUB_OUTPUT
       shell: bash
