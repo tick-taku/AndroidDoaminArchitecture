@@ -10,6 +10,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NEW_VERSION: ${{ inputs.version }}
     steps:
       - uses: actions/checkout@v4
       - name: Make PullRequest
@@ -18,7 +21,6 @@ jobs:
         with:
           version: ${{ inputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Post comment
+      - name: Echo
         run: |
-          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "release please"
-          gh pr comment ${{ steps.make-pr.outputs.pr_number }} -b "app please"
+          echo "${{ steps.make-pr.outputs.pr_number }}"
