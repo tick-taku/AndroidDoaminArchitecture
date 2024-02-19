@@ -12,7 +12,7 @@ inputs:
 outputs:
   pr_number:
     description: "Release PR's number"
-    value: ${{ steps.make-pr.outputs.pr_number }}
+    value: ${{ steps.make_pr.outputs.pr_number }}
 
 runs:
   using: "composite"
@@ -36,8 +36,13 @@ runs:
         git push origin $(git branch --show-current)
       shell: bash
     - name: Make Pull Request
-      id: make-pr
+      id: make_pr
       run: |
         ./.github/script/make_pr.sh "$NEW_VERSION"
-        echo "pr_number=$(gh pr list --state open | grep \"Release $NEW_VERSION\" | awk '{print $1}')" >> $GITHUB_OUTPUT
+        echo "pr_number=$(gh pr list -s open --json number,labels -q '[.[] | select(.labels.[].name == "Release")][0] | .number')"
+        echo "pr_number=$(gh pr list -s open --json number,labels -q '[.[] | select(.labels.[].name == "Release")][0] | .number')" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Echo
+      run: |
+        echo "${{ steps.make_pr.outputs.pr_number }}"
       shell: bash

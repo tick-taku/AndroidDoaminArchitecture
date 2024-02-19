@@ -10,4 +10,5 @@ gh pr create \
   -B main \
   -t "$release_title" \
   -m "$release_title" \
-  -b "$pr_body"
+  -b "$pr_body" \
+  -l "Release"
