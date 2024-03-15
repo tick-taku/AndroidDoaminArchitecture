@@ -1,0 +1,14 @@
+name: CHECK_RELEASED
+
+on: push
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.PAT }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check project item released
+        run: |
+          ./.github/script/check_merged_to_released_on_project.sh
