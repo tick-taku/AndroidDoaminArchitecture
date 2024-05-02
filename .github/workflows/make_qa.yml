@@ -1,0 +1,20 @@
+name: MAKE_QA
+
+on:
+  issue_comment:
+    type: [ created ]
+
+jobs:
+  build:
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'make qa')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make QA
+        env:
+          PR_NUMBER: ${{ github.event.issue.number }}
+          NOTION_API_SECRET: ${{ secrets.NOTION_API_SECRET }}
+          NOTION_QA_DATABASE: ${{ secrets.NOTION_QA_DATABASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$PR_NUMBER"
