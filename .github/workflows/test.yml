@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  pull_request:
+    types: [ milestoned, demilestoned ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Milestoned
+        if: ${{ github.event.action == 'milestoned' }}
+        run: |
+          echo "Milestoned"
+      - name: Demilestoned
+        if: ${{ github.event.action == 'demilestoned' }}
+        run: |
+          echo "Demilestoned"
